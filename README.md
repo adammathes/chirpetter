@@ -18,21 +18,12 @@ I should probably distribute binaries for this but that is left as an exercise f
 
 Alternatively, the shell script old version of this is included in this repo (old_twitter_to_mail.sh)
 
-1. Install go
-
-https://golang.org
-
-2. git clone https://github.com/adammathes/chirpetter.git
-
-3. go build
-
-4. cp example_chirp.sh chirp.sh
-
-5. Edit chirp.sh to include your twitter keys/auth/etc
-
-Consider following the instructions and using the authorization tool https://github.com/sferik/t
-
-6. ./chirp.sh
+   1. Install go https://golang.org
+   2. git clone https://github.com/adammathes/chirpetter.git
+   3. go get relevant libraries, go build this repo
+   4. cp example_chirp.sh chirp.sh
+   5. Edit chirp.sh to include your twitter keys/auth/etc. Consider following the instructions and using the authorization tool https://github.com/sferik/t
+   6. run chirp.sh
 
 Make sure everything looks reasonable and add to cron something like
 
