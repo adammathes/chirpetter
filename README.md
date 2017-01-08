@@ -10,13 +10,13 @@ Instead just have whatever has happened emailed to you once a day.
 
 This is mostly a proof of concept, the code here is trivial, I just wanted to play around with Go a bit.
 
-This will email you all the tweets posted since the last run. It also helpfully pulls out any non-twitter/social media links to the top and fetches their title.
+The idea is to email yourself all the tweets posted since the last run. It also helpfully pulls out any non-twitter/social media links to the top and fetches their title.
 
 ## how?
 
 I should probably distribute binaries for this but that is left as an exercise for the reader.
 
-Alternatively, the shell script old version of this is included in this repo (old_twitter_to_mail.sh)
+Alternatively, the shell script old version of this is included in this repo -- old_twitter_to_mail.sh -- should more or less work after you install the t command line utility and have a working mail command
 
    1. Install go https://golang.org
    2. git clone https://github.com/adammathes/chirpetter.git
