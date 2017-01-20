@@ -18,6 +18,8 @@ import (
 	"github.com/dghubble/oauth1"
 )
 
+const MAX_ITEMS = 200
+
 func main() {
 
 	flags := flag.NewFlagSet("user-auth", flag.ExitOnError)
@@ -55,9 +57,9 @@ func main() {
 	// get everything since last seen, or 200 if we don't know where we left off
 	var homeTimelineParams *twitter.HomeTimelineParams
 	if lastSeen != 0 {
-		homeTimelineParams = &twitter.HomeTimelineParams{SinceID: int64(lastSeen)}
+		homeTimelineParams = &twitter.HomeTimelineParams{Count:MAX_ITEMS, SinceID: int64(lastSeen)}
 	} else {
-		homeTimelineParams = &twitter.HomeTimelineParams{Count: 200}
+		homeTimelineParams = &twitter.HomeTimelineParams{Count: MAX_ITEMS}
 	}
 	tweets, _, _ := client.Timelines.HomeTimeline(homeTimelineParams)
 	if len(tweets) == 0 {
