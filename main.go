@@ -57,7 +57,7 @@ func main() {
 	// get everything since last seen, or 200 if we don't know where we left off
 	var homeTimelineParams *twitter.HomeTimelineParams
 	if lastSeen != 0 {
-		homeTimelineParams = &twitter.HomeTimelineParams{Count:MAX_ITEMS, SinceID: int64(lastSeen)}
+		homeTimelineParams = &twitter.HomeTimelineParams{Count: MAX_ITEMS, SinceID: int64(lastSeen)}
 	} else {
 		homeTimelineParams = &twitter.HomeTimelineParams{Count: MAX_ITEMS}
 	}
