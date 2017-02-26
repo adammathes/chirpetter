@@ -18,7 +18,7 @@ import (
 	"github.com/dghubble/oauth1"
 )
 
-const MAX_ITEMS = 200
+const MAX_ITEMS = 2000
 
 func main() {
 
@@ -33,7 +33,9 @@ func main() {
 	// optional
 	lastIDFile := flags.String("last-id", "", "File to store last ID seen")
 	extractLinks := flags.Bool("extract-links", false, "Pull out external links to top")
+	onlyLinks := flags.Bool("only-links", false, "Only show link list")
 
+	
 	flags.Parse(os.Args[1:])
 	flagutil.SetFlagsFromEnv(flags, "CHIRPETTER")
 
@@ -63,17 +65,21 @@ func main() {
 	}
 	tweets, _, _ := client.Timelines.HomeTimeline(homeTimelineParams)
 	if len(tweets) == 0 {
-		panic("You're all caught up! No tweets since last run.")
+		return
 	}
 
 	// save most recent for next time
 	lf, err = os.Create(*lastIDFile)
-	if err != nil {
-		panic(err)
+	if err == nil {
+		fmt.Fprintf(lf, "%d", tweets[0].ID)
+		lf.Close()
 	}
-	fmt.Fprintf(lf, "%d", tweets[0].ID)
-	lf.Close()
 
+	if *onlyLinks {
+		printOnlyLinks(tweets)
+		return
+	}
+	
 	// take out all tweets with non-twitter links, pull them up to the top
 	// this will be in random order since we fetch link titles asynchronously
 	if *extractLinks {
@@ -87,6 +93,18 @@ func main() {
 		fmt.Printf("@%s\n%s\n\n", tweet.User.ScreenName, tweet.Text)
 	}
 }
+
+func printOnlyLinks(tweets []twitter.Tweet) {
+	for _, tweet := range tweets {
+		for _, url := range tweet.Entities.Urls {
+			if !blacklisted(url.ExpandedURL) {
+				fmt.Printf("%s\n", url.ExpandedURL)
+				break
+			}
+		}
+	}
+}
+
 
 func printLinks(tweets []twitter.Tweet) {
 	linkCount := 0
